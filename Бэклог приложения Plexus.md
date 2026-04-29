@@ -42,4 +42,4 @@
 10. На первом релизе **обязательно наличие модуля проектов.**
 ## DFD контекстного и логического уровня
 Процессы смоделированы с использованием диаграммы потоков данных (DFD).
-[[Lifeloga_DFD.drawio.html]]
+[[[Lifeloga_DFD.drawio.html]]](https://github.com/GreenP1ece/plexus/blob/main/Lifeloga_DFD.drawio.html)
