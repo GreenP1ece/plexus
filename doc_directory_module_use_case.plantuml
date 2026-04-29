@@ -1,0 +1,68 @@
+@startuml "Use Case диаграмма модуля директорий"
+title Use Case диаграмма модуля директорий
+left to right direction
+skinparam actorStyle awesome
+
+actor "Пользователь"  as User
+actor "Редактор"      as Editor
+actor "Комментатор"   as Commenter
+actor "Администратор" as Admin
+actor "Владелец"      as Owner
+
+User  <|-- Editor
+User  <|-- Commenter
+User  <|-- Admin
+Admin <|-- Owner
+
+rectangle "Работа с директориями" {
+  usecase "CRUD директории"            as CRUDDirectory
+  usecase "Создать директорию"         as CreateDirectory
+  usecase "Дублировать директорию"     as DuplicateDirectory
+  usecase "Импорт директорий"          as ImportDirectories
+  usecase "Найти директорию"           as SearchDirectory
+  usecase "Найти по названию"          as SearchByTitle
+  usecase "Найти по содержанию"        as SearchByContent
+  usecase "Сменить иконку"             as ChangeIcon
+  usecase "Иконка из локал. хранилища" as ChangeIconFromLocal
+  usecase "Иконка по URL"              as ChangeIconByURL
+}
+
+rectangle "Управление контентом" {
+  usecase "Управлять директориями"               as ManageDirectories
+  usecase "Ограничение доступа к директориям"    as ManageDirectoryAccess
+  usecase "Управлять версиями"                   as ManageVersions
+  usecase "Управлять пользователями"             as ManageUsers
+  usecase "Управлять правами доступа"            as ManagePermissions
+}
+
+rectangle "Только Владелец" {
+  usecase "Управлять пространством"    as ManageWorkspace
+  usecase "Управлять администраторами" as ManageAdmins
+}
+
+CRUDDirectory ..> CreateDirectory   : <<include>>
+CreateDirectory ..> DuplicateDirectory : <<extend>>
+
+' Иконка — выбор одного из вариантов
+ChangeIcon ..> ChangeIconFromLocal : <<extend>>
+ChangeIcon ..> ChangeIconByURL     : <<extend>>
+
+SearchDirectory ..> SearchByTitle   : <<extend>>
+SearchDirectory ..> SearchByContent : <<extend>>
+
+ManageDirectories ..> ManageDirectoryAccess : <<extend>>
+
+User --> CRUDDirectory
+User --> ChangeIcon
+User --> ImportDirectories
+User --> SearchDirectory
+
+Admin --> ManageDirectories
+Admin --> ManageVersions
+Admin --> ManageUsers
+Admin --> ManagePermissions
+
+Owner --> ManageWorkspace
+Owner --> ManageAdmins
+
+@enduml

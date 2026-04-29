@@ -1,0 +1,136 @@
+@startuml "ER - Основной модуль"
+skinparam linetype ortho
+
+' ─── Enums ───────────────────────────────────
+enum SystemRole {
+    Owner
+    Admin
+    Editor
+    Commenter
+}
+
+enum ClaimType {
+    CanView
+    CanCreate
+    CanEdit
+    CanDelete
+    CanComment
+    CanManageAccess
+    CanAcceptDecision
+    CanDenyDecision
+    CanImport
+}
+
+enum ObjectType {
+    Note
+    Directory
+    Project
+    Decision
+}
+
+enum VersionableObjectType {
+    Note
+    Directory
+    Project
+    Decision
+}
+
+' ─── Entities ────────────────────────────────
+entity USER {
+    *id         : varchar <<PK>>
+    --
+    username    : varchar <<unique>>
+    first_name  : varchar
+    last_name   : varchar
+    email       : varchar <<unique>>
+    created_at  : timestamp
+    updated_at  : timestamp
+    deleted_at  : timestamp
+}
+
+entity SPACE {
+    *id          : varchar <<PK>>
+    --
+    creator_id   : varchar <<FK>>
+    title        : varchar
+    description  : varchar
+    created_at   : timestamp
+    updated_at   : timestamp
+    deleted_at   : timestamp
+}
+
+entity SPACE_MEMBER {
+    *id         : varchar <<PK>>
+    --
+    space_id    : varchar <<FK>>
+    user_id     : varchar <<FK>>
+    role_id     : varchar <<FK>>
+    created_at  : timestamp
+    updated_at  : timestamp
+}
+
+entity ROLE {
+    *id          : varchar <<PK>>
+    --
+    space_id     : varchar <<FK>>
+    creator_id   : varchar <<FK>>
+    title        : varchar
+    system_role  : SystemRole
+    claims       : ClaimType[]
+    created_at   : timestamp
+    updated_at   : timestamp
+    deleted_at   : timestamp
+}
+
+entity OBJECT_PERMISSION {
+    *id          : varchar <<PK>>
+    --
+    space_id     : varchar <<FK>>
+    user_id      : varchar <<FK>>
+    object_id    : varchar
+    object_type  : ObjectType
+    claims       : ClaimType[]
+    created_at   : timestamp
+    updated_at   : timestamp
+}
+
+note right of OBJECT_PERMISSION
+  Приоритет проверки прав (по убыванию):
+  1. OBJECT_PERMISSION где object_id = id объекта
+  2. OBJECT_PERMISSION где object_id = directory_id
+     или project_id родителя объекта
+  3. ROLE.claims через SPACE_MEMBER
+end note
+
+entity VERSION {
+    *id          : varchar <<PK>>
+    --
+    space_id     : varchar <<FK>>
+    author_id    : varchar <<FK>>
+    object_id    : varchar
+    object_type  : VersionableObjectType
+    snapshot     : text
+    created_at   : timestamp
+}
+
+' ─── Relations ───────────────────────────────
+USER ||--|| SPACE           : "создаёт"
+SPACE ||--o{ SPACE_MEMBER   : "включает"
+USER ||--o{ SPACE_MEMBER    : "участвует"
+ROLE ||--o{ SPACE_MEMBER    : "назначается через"
+SPACE ||--o{ ROLE           : "определяет"
+USER ||--o{ ROLE            : "создаёт"
+SPACE ||--o{ OBJECT_PERMISSION : "ограничена"
+USER ||--o{ OBJECT_PERMISSION  : "выдана"
+SPACE ||--o{ VERSION        : "содержит"
+USER ||--o{ VERSION         : "авторизует"
+
+OBJECT_PERMISSION -- ObjectType
+OBJECT_PERMISSION -- ClaimType
+
+ROLE -- SystemRole
+ROLE -- ClaimType
+
+VERSION -- VersionableObjectType
+
+@enduml

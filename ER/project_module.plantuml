@@ -1,0 +1,99 @@
+@startuml "ER - Модуль проектов"
+skinparam linetype ortho
+
+' ─── Enums ───────────────────────────────────
+enum DecisionStatus {
+    UnderReview
+    Accepted
+    ExplicitlyDenied
+    ImplicitlyDenied
+}
+
+note right of DecisionStatus
+  ImplicitlyDenied — автоматически при принятии
+  конкурирующего решения (БП-А-31, БП-А-32).
+  При аннулировании принятого — ImplicitlyDenied
+  возвращается в UnderReview (БП-А-33).
+  ExplicitlyDenied при аннулировании не меняется.
+end note
+
+enum ProjectStatus {
+    Active
+    Completed
+}
+
+' ─── Stubs внешних сущностей ─────────────────
+entity USER {
+    *id : varchar <<PK>>
+}
+
+entity SPACE {
+    *id : varchar <<PK>>
+}
+
+entity NOTE {
+    *id : varchar <<PK>>
+}
+
+' ─── Entities ────────────────────────────────
+entity PROJECT {
+    *id              : varchar <<PK>>
+    --
+    space_id         : varchar <<FK>>
+    creator_id       : varchar <<FK>>
+    source_note_id   : varchar <<FK, nullable>>
+    title            : varchar
+    content          : text
+    status           : ProjectStatus
+    is_involve_finance : boolean
+    created_at       : timestamp
+    updated_at       : timestamp
+    deleted_at       : timestamp
+}
+
+note right of PROJECT
+  source_note_id — nullable; заполняется,
+  если проект создан из заметки (БП-Ф-34).
+  Удаление NOTE не влияет на PROJECT (БП-Ф-35).
+  status = Completed выставляется автоматически
+  по условию БП-А-34 / БП-Вд-31.
+end note
+
+entity DECISION {
+    *id              : varchar <<PK>>
+    --
+    space_id         : varchar <<FK>>
+    project_id       : varchar <<FK>>
+    creator_id       : varchar <<FK>>
+    source_note_id   : varchar <<FK, nullable>>
+    parent_id        : varchar <<FK, nullable>>
+    title            : varchar
+    content          : text
+    status           : DecisionStatus
+    created_at       : timestamp
+    updated_at       : timestamp
+    deleted_at       : timestamp
+}
+
+note right of DECISION
+  parent_id = null → корневой узел дерева.
+  Дерево без ограничений по глубине (БП-Ф-31).
+  source_note_id — nullable; заполняется,
+  если решение создано из заметки (БП-Ф-34).
+end note
+
+' ─── Relations ───────────────────────────────
+SPACE ||--o{ PROJECT        : "содержит"
+USER  ||--o{ PROJECT        : "создаёт"
+NOTE  |o--o{ PROJECT        : "источник"
+
+PROJECT  ||--o{ DECISION    : "содержит"
+SPACE    ||--o{ DECISION    : "содержит"
+USER     ||--o{ DECISION    : "создаёт"
+NOTE     |o--o{ DECISION    : "источник"
+DECISION |o--o| DECISION    : "дочернее"
+
+DECISION -- DecisionStatus
+
+PROJECT -- ProjectStatus
+@enduml

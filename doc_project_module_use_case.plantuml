@@ -1,0 +1,65 @@
+@startuml "Use Case диаграмма модуля проектов"
+
+title Use Case диаграмма модуля проектов
+
+left to right direction
+
+skinparam actorStyle awesome
+actor "Пользователь"  as User
+actor "Редактор"      as Editor
+actor "Комментатор"   as Commenter
+actor "Администратор" as Admin
+actor "Владелец"      as Owner
+
+User  <|-- Editor
+User  <|-- Commenter
+User  <|-- Admin
+Admin <|-- Owner
+
+rectangle "Работа с проектов" {
+  usecase "CRUD проектов"             as CRUDProject
+  usecase "CRUD решений"              as CRUDDecision
+  usecase "Найти проект"              as SearchProject
+  usecase "Найти решение"             as SearchDecision
+  usecase "Найти по названию"         as SearchByTitle
+  usecase "Найти по содержанию"       as SearchByContent
+  usecase "Создать проект из записи"  as CreateProjectFromNote
+  usecase "Создать решение из записи" as CreateDecisionFromNote
+}
+
+rectangle "Управление контентом" {
+  usecase "Управлять проектами"    as ManageProjects
+  usecase "Управлять решениями"       as ManageDecisions
+  usecase "Управлять версиями"        as ManageVersions
+  usecase "Управлять пользователями"  as ManageUsers
+  usecase "Управлять правами доступа" as ManagePermissions
+  usecase "Ограничение доступа конкретных проектов" as ManageProjectAccess
+}
+
+rectangle "Только Владелец" {
+  usecase "Управлять пространством"   as ManageWorkspace
+  usecase "Управлять администраторами" as ManageAdmins
+}
+
+SearchProject  ..> SearchByTitle   : <<extend>>
+SearchProject  ..> SearchByContent : <<extend>>
+SearchDecision  ..> SearchByTitle   : <<extend>>
+SearchDecision  ..> SearchByContent : <<extend>>
+ManageProjects ..> ManageProjectAccess : <<extend>>
+CRUDProject ..> CreateDecisionFromNote : <<extend>>
+CRUDProject ..> CreateProjectFromNote
+
+User --> CRUDProject
+User --> CRUDDecision
+User --> SearchProject
+User --> SearchDecision
+Admin --> ManageProjects
+Admin --> ManageDecisions
+Admin --> ManageVersions
+Admin --> ManageUsers
+Admin --> ManagePermissions
+
+Owner --> ManageWorkspace
+Owner --> ManageAdmins
+
+@enduml

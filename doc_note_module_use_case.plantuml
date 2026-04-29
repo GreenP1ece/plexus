@@ -1,0 +1,107 @@
+@startuml "Use Case диаграмма модуля заметок"
+title Use Case диаграмма модуля заметок
+left to right direction
+skinparam actorStyle awesome
+
+actor "Пользователь"  as User
+actor "Редактор"      as Editor
+actor "Комментатор"   as Commenter
+actor "Администратор" as Admin
+actor "Владелец"      as Owner
+
+User  <|-- Editor
+User  <|-- Commenter
+User  <|-- Admin
+Admin <|-- Owner
+
+rectangle "Работа с записями" {
+  usecase "CRUD записи"               as CRUDNote
+  usecase "Создать запись"            as CreateNote
+  usecase "Создать запись из шаблона" as CreateNoteFromTemplate
+  usecase "Дублировать запись"        as DuplicateNote
+  usecase "Редактировать запись"      as EditNote
+  usecase "Просмотреть запись"        as ViewNote
+  usecase "Создать тег в записи"      as CreateTag
+  usecase "Создать ссылку"            as CreateLink
+  usecase "Ссылка на запись"          as CreateNoteLink
+  usecase "Ссылка на локальный файл"  as CreateLocalFileLink
+  usecase "URL-ссылка"                as CreateURLLink
+  usecase "Изменить вид ссылки"       as EditLinkView
+  usecase "Комментировать запись"     as CommentNote
+  usecase "Импорт записей"            as ImportNotes
+  usecase "Найти запись"              as SearchNote
+  usecase "Найти по названию"         as SearchByTitle
+  usecase "Найти по содержанию"       as SearchByContent
+  usecase "Удалить запись"            as DeleteNote
+  usecase "Мягкое удаление"           as SoftDeleteNote
+  usecase "Удалить запись навсегда"   as PermanentDeleteNote
+  usecase "Восстановить запись"       as UnarchiveNote
+  usecase "Искать в содержимом"       as SearchInNoteContent
+}
+
+rectangle "Управление контентом" {
+  usecase "Управлять записями"                     as ManageNotes
+  usecase "Ограничение доступа к записям"          as ManageNoteAccess
+  usecase "Управлять тегами"                       as ManageTags
+  usecase "Управлять шаблонами"                    as ManageTemplates
+  usecase "Управлять версиями"                     as ManageVersions
+  usecase "Управлять пользователями"               as ManageUsers
+  usecase "Управлять правами доступа"              as ManagePermissions
+}
+
+rectangle "Только Владелец" {
+  usecase "Управлять пространством"    as ManageWorkspace
+  usecase "Управлять администраторами" as ManageAdmins
+}
+
+' CRUD — декомпозиция
+CRUDNote   ..> CreateNote  : <<include>>
+CRUDNote   ..> EditNote    : <<include>>
+CRUDNote   ..> ViewNote    : <<include>>
+CRUDNote   ..> DeleteNote  : <<include>>
+
+' Создание
+CreateNote ..> DuplicateNote          : <<extend>>
+CreateNote ..> CreateNoteFromTemplate : <<extend>>
+
+' Редактирование
+EditNote ..> CreateTag             : <<extend>>
+EditNote ..> CreateLink            : <<extend>>
+CreateLink ..> CreateNoteLink      : <<extend>>
+CreateLink ..> CreateLocalFileLink : <<extend>>
+CreateLink ..> CreateURLLink       : <<extend>>
+CreateLink ..> EditLinkView        : <<extend>>
+
+' Просмотр
+ViewNote ..> CommentNote : <<extend>>
+ViewNote ..> SearchInNoteContent : <<extend>>
+
+' Поиск
+SearchNote ..> SearchByTitle   : <<extend>>
+SearchNote ..> SearchByContent : <<extend>>
+
+' Управление
+ManageNotes ..> ManageNoteAccess : <<extend>>
+
+' Удаление
+DeleteNote ..> PermanentDeleteNote      : <<include>>
+DeleteNote ..> SoftDeleteNote           : <<include>>
+SoftDeleteNote ..> UnarchiveNote       : <<extend>>
+' Связи User
+User --> CRUDNote
+User --> ImportNotes
+User --> SearchNote
+
+' Связи Admin
+Admin --> ManageNotes
+Admin --> ManageTags
+Admin --> ManageTemplates
+Admin --> ManageVersions
+Admin --> ManageUsers
+Admin --> ManagePermissions
+
+' Связи Owner
+Owner --> ManageWorkspace
+Owner --> ManageAdmins
+
+@enduml

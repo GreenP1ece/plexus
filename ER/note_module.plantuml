@@ -1,0 +1,134 @@
+@startuml "ER - Модуль заметок"
+skinparam linetype ortho
+
+' ─── Stubs внешних сущностей ─────────────────
+entity USER {
+    *id : varchar <<PK>>
+}
+
+entity SPACE {
+    *id : varchar <<PK>>
+}
+
+' ─── Entities ────────────────────────────────
+entity NOTE {
+    *id            : varchar <<PK>>
+    --
+    space_id       : varchar <<FK>>
+    creator_id     : varchar <<FK>>
+    directory_id   : varchar <<FK, nullable>>
+    title          : varchar
+    content        : text
+    is_template    : boolean
+    outer_links    : text[]
+    path           : varchar
+    created_at     : timestamp
+    updated_at     : timestamp
+    deleted_at     : timestamp
+}
+
+note right of NOTE
+  outer_links — внешние URL-ссылки,
+  не ссылающиеся на объекты в системе.
+  path — материализованный путь
+  для быстрого поиска по иерархии.
+end note
+
+entity NOTE_LINK {
+    *source_note_id : varchar <<PK, FK>>
+    *target_note_id : varchar <<PK, FK>>
+    --
+    created_at      : timestamp
+}
+
+note right of NOTE_LINK
+  Заменяет backlink_ids / forwardlink_ids в NOTE.
+  Backlinks: SELECT * WHERE target_note_id = ?
+  Forwardlinks: SELECT * WHERE source_note_id = ?
+  Самоссылка (source = target) допустима —
+  попадает только в forwardlinks (БП-Ф-14).
+end note
+
+entity DIRECTORY {
+    *id         : varchar <<PK>>
+    --
+    space_id    : varchar <<FK>>
+    creator_id  : varchar <<FK>>
+    parent_id   : varchar <<FK, nullable>>
+    icon_id     : varchar <<FK, nullable>>
+    title       : varchar
+    path        : varchar
+    depth       : int
+    created_at  : timestamp
+    updated_at  : timestamp
+    deleted_at  : timestamp
+}
+
+entity TAG {
+    *id         : varchar <<PK>>
+    --
+    space_id    : varchar <<FK>>
+    title       : varchar
+    created_at  : timestamp
+    deleted_at  : timestamp
+}
+
+note right of TAG
+  deleted_at заполняется автоматически,
+  когда тег исчезает из всех заметок (БП-А-12).
+  updated_at отсутствует — тег неизменяем,
+  переименование создаёт каскадное обновление
+  вхождений в NOTE.content (БП-А-13).
+end note
+
+entity NOTE_TAG {
+    *note_id    : varchar <<PK, FK>>
+    *tag_id     : varchar <<PK, FK>>
+    --
+    created_at  : timestamp
+}
+
+entity ICON {
+    *id         : varchar <<PK>>
+    --
+    space_id    : varchar <<FK>>
+    url         : varchar
+    created_at  : timestamp
+}
+
+entity COMMENT {
+    *id          : varchar <<PK>>
+    --
+    space_id     : varchar <<FK>>
+    note_id      : varchar <<FK>>
+    creator_id   : varchar <<FK>>
+    content      : text
+    anchor_text  : varchar
+    created_at   : timestamp
+    updated_at   : timestamp
+    deleted_at   : timestamp
+}
+
+' ─── Relations ───────────────────────────────
+SPACE ||--o{ NOTE          : "содержит"
+USER  ||--o{ NOTE          : "создаёт"
+DIRECTORY |o--o{ NOTE      : "хранит"
+
+NOTE ||--o{ NOTE_LINK      : "источник"
+NOTE ||--o{ NOTE_LINK      : "цель"
+
+NOTE ||--o{ NOTE_TAG       : "помечена"
+TAG  ||--o{ NOTE_TAG       : "применяется к"
+SPACE ||--o{ TAG           : "определяет"
+
+SPACE ||--o{ DIRECTORY     : "содержит"
+USER  ||--o{ DIRECTORY     : "создаёт"
+DIRECTORY |o--o| DIRECTORY : "дочерняя"
+ICON  |o--o| DIRECTORY     : "иконка"
+SPACE ||--o{ ICON          : "содержит"
+
+SPACE ||--o{ COMMENT       : "содержит"
+NOTE  ||--o{ COMMENT       : "имеет"
+USER  ||--o{ COMMENT       : "создаёт"
+
+@enduml
