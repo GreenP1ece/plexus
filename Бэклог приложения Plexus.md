@@ -43,5 +43,5 @@
 ## DFD контекстного и логического уровня
 Процессы смоделированы с использованием диаграммы потоков данных (DFD)
 
-![[Pasted image 20260501203002.png]]
+!(https://github.com/GreenP1ece/plexus/blob/main/Lifeloga_DFD-%D0%9A%D0%BE%D0%BD%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%BD%D1%8B%D0%B9%20%D1%83%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C.drawio.svg)
 ![[Pasted image 20260501203031.png]]
