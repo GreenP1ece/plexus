@@ -1,0 +1,664 @@
+@startuml Note_Module
+
+!define AGGREGATE_ROOT <<aggregate_root>>
+!define VALUE_OBJECT <<value_object>>
+!define ENTITY <<entity>>
+!define DOMAIN_EVENT <<domain_event>>
+!define REPOSITORY <<repository>>
+!define SERVICE <<service>>
+!define COMMAND <<command>>
+!define QUERY <<query>>
+!define COMMAND_HANDLER <<command_handler>>
+!define QUERY_HANDLER <<query_handler>>
+!define EVENT_HANDLER <<event_handler>>
+!define INTERFACE <<interface>>
+!define DTO <<dto>>
+!define READ_MODEL <<read_model>>
+!define CONTROLLER <<controller>>
+!define UTILITY <<utility>>
+!define MAPPER <<mapper>>
+!define BUILDER <<builder>>
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam groupInheritance 2
+
+skinparam package {
+  BackgroundColor<<Domain>> #FEFECE
+  BackgroundColor<<Application>> #E3F2FD
+  BackgroundColor<<Infrastructure>> #F3E5F5
+  BackgroundColor<<Presentation>> #E8F5E9
+  BackgroundColor<<Tests>> #FFF3E0
+  BackgroundColor<<Shared>> #ECEFF1
+}
+
+' ============================================
+' NOTE DOMAIN
+' ============================================
+package "Note_Domain" <<Domain>> {
+  
+  class Note AGGREGATE_ROOT {
+    + id: NoteId {readonly}
+    + creatorId: CreatorId {readonly}
+    - title: string
+    - directoryId: DirectoryId?
+    - mood: Mood
+    - content: NoteContent
+    - createdAt: Date {readonly}
+    - updatedAt: Date
+    - deletedAt: Date?
+    - events: DomainEvent[]
+    __
+    + {static} create(id, creatorId, title, content, directoryId?, mood): Result<Note, DomainError>
+    + updateContent(content: NoteContent): Result<void, DomainError>
+    + changeMood(newMood: Mood): Result<void, DomainError>
+    + moveToDirectory(directoryId?: DirectoryId): Result<void, DomainError>
+    + delete(deletedAt: Date): Result<void, DomainError>
+    + isDeleted(): boolean
+    + pullDomainEvents(): DomainEvent[]
+    __getters__
+    + directoryId(): DirectoryId?
+    + mood(): Mood
+    + title(): string
+    + content(): string
+    + wordCount(): number
+    + tags(): Tag[]
+    + linkedNoteIds(): string[]
+    + createdAt(): Date
+    + updatedAt(): Date
+    + deletedAt(): Date?
+  }
+
+  class NoteContent VALUE_OBJECT {
+    - raw: string {readonly}
+    - tags: Tag[] {readonly}
+    - links: string[] {readonly}
+    __
+    + {static} create(raw, tags, links): Result<NoteContent, DomainError>
+    + raw(): string
+    + tags(): Tag[]
+    + links(): string[]
+    + wordCount(): number
+  }
+
+  class Tag ENTITY {
+    + id: TagId {readonly}
+    + name: string {readonly}
+    + color: string? {readonly}
+    __
+    + equals(other: Tag): boolean
+  }
+
+  enum Mood {
+    HAPPY
+    SAD
+    ANGRY
+  }
+
+  interface INoteRepository INTERFACE {
+    + findById(id: NoteId): Promise<Note?>
+    + save(note: Note): Promise<void>
+    + findByDirectory(directoryId: DirectoryId): Promise<Note[]>
+    + findAll(): Promise<Note[]>
+  }
+
+  ' Domain Events
+  class NoteCreatedEvent DOMAIN_EVENT {
+    + noteId: NoteId {readonly}
+    + creatorId: CreatorId {readonly}
+    + title: string {readonly}
+    + directoryId: DirectoryId? {readonly}
+    + mood: Mood {readonly}
+    + createdAt: Date {readonly}
+  }
+
+  class NoteUpdatedEvent DOMAIN_EVENT {
+    + noteId: NoteId {readonly}
+    + title: string? {readonly}
+    + directoryId: DirectoryId? {readonly}
+    + mood: Mood? {readonly}
+    + updatedAt: Date {readonly}
+  }
+
+  class NoteDeletedEvent DOMAIN_EVENT {
+    + noteId: NoteId {readonly}
+    + deletedAt: Date {readonly}
+  }
+
+  class NoteMovedToDirectoryEvent DOMAIN_EVENT {
+    + noteId: NoteId {readonly}
+    + fromDirectoryId: DirectoryId? {readonly}
+    + toDirectoryId: DirectoryId? {readonly}
+    + movedAt: Date {readonly}
+  }
+}
+
+' ============================================
+' NOTE APPLICATION
+' ============================================
+package "Note_Application" <<Application>> {
+  
+  ' Services
+  class NoteCommandService SERVICE {
+    - createHandler: CreateNoteHandler
+    - updateHandler: UpdateNoteHandler
+    - deleteHandler: DeleteNoteHandler
+    __
+    + create(cmd: CreateNoteCommand): Promise<Result<NoteId, DomainError>>
+    + update(cmd: UpdateNoteCommand): Promise<Result<void, DomainError>>
+    + delete(cmd: DeleteNoteCommand): Promise<Result<void, DomainError>>
+  }
+
+  class NoteQueryService SERVICE {
+    - findByIdHandler: FindNoteByIdHandler
+    - findAllHandler: FindAllNotesHandler
+    __
+    + findById(query: FindNoteByIdQuery): Promise<NoteReadModel?>
+    + findAll(query: FindAllNotesQuery): Promise<NoteReadModel[]>
+  }
+
+  ' Commands
+  class CreateNoteCommand COMMAND {
+    + title: string {readonly}
+    + directoryId: string? {readonly}
+    + content: string {readonly}
+    + creatorId: string {readonly}
+    + mood: Mood? {readonly}
+  }
+
+  class UpdateNoteCommand COMMAND {
+    + id: string {readonly}
+    + title: string? {readonly}
+    + directoryId: string? {readonly}
+    + content: string? {readonly}
+    + mood: Mood? {readonly}
+  }
+
+  class DeleteNoteCommand COMMAND {
+    + id: string {readonly}
+  }
+
+  ' Queries
+  class FindNoteByIdQuery QUERY {
+    + id: string {readonly}
+  }
+
+  class FindAllNotesQuery QUERY {
+    + creatorId: string {readonly}
+    + directoryId: string? {readonly}
+    + page: number? {readonly}
+    + limit: number? {readonly}
+  }
+
+  ' Read Model
+  class NoteReadModel READ_MODEL {
+    + id: string {readonly}
+    + title: string {readonly}
+    + directoryId: string? {readonly}
+    + content: string {readonly}
+    + mood: Mood {readonly}
+    + creatorId: string {readonly}
+    + linkedNoteIds: string[] {readonly}
+    + tags: string[] {readonly}
+    + createdAt: Date {readonly}
+    + updatedAt: Date {readonly}
+    + deletedAt: Date? {readonly}
+    + wordCount: number? {readonly}
+    + preview: string? {readonly}
+  }
+
+  ' Command Handlers
+  class CreateNoteHandler COMMAND_HANDLER {
+    - uow: IUnitOfWork
+    - tagExtractor: ITagExtractor
+    - linkExtractor: ILinkExtractor
+    - eventBus: EventBus
+    __
+    + execute(cmd: CreateNoteCommand): Promise<Result<NoteId, DomainError>>
+  }
+
+  class UpdateNoteHandler COMMAND_HANDLER {
+    - uow: IUnitOfWork
+    - tagExtractor: ITagExtractor
+    - linkExtractor: ILinkExtractor
+    - eventBus: EventBus
+    __
+    + execute(cmd: UpdateNoteCommand): Promise<Result<void, DomainError>>
+  }
+
+  class DeleteNoteHandler COMMAND_HANDLER {
+    - uow: IUnitOfWork
+    - eventBus: EventBus
+    __
+    + execute(cmd: DeleteNoteCommand): Promise<Result<void, DomainError>>
+  }
+
+  ' Query Handlers
+  class FindNoteByIdHandler QUERY_HANDLER {
+    - prisma: PrismaService
+    __
+    + execute(query: FindNoteByIdQuery): Promise<NoteReadModel?>
+  }
+
+  class FindAllNotesHandler QUERY_HANDLER {
+    - prisma: PrismaService
+    __
+    + execute(query: FindAllNotesQuery): Promise<NoteReadModel[]>
+  }
+
+  ' Event Handlers
+  class OnNoteDeletedHandler EVENT_HANDLER {
+    - prisma: PrismaService
+    __
+    + handle(event: NoteDeletedEvent): Promise<void>
+  }
+
+  class OnNoteMovedHandler EVENT_HANDLER {
+    - prisma: PrismaService
+    __
+    + handle(event: NoteMovedToDirectoryEvent): Promise<void>
+  }
+
+  ' Extractors
+  interface ITagExtractor INTERFACE {
+    + extract(content: string): Tag[]
+  }
+
+  interface ILinkExtractor INTERFACE {
+    + extract(content: string): string[]
+  }
+}
+
+' ============================================
+' NOTE INFRASTRUCTURE
+' ============================================
+package "Note_Infrastructure" <<Infrastructure>> {
+  
+  class NoteRepository REPOSITORY {
+    - prisma: PrismaService | PrismaTx
+    - mapper: NotePersistenceMapper
+    __
+    + findById(id: NoteId): Promise<Note?>
+    + save(note: Note): Promise<void>
+    + findByDirectory(directoryId: DirectoryId): Promise<Note[]>
+    + findAll(): Promise<Note[]>
+  }
+
+  class TagExtractor SERVICE {
+    + extract(content: string): Tag[]
+  }
+
+  class LinkExtractor SERVICE {
+    + extract(content: string): string[]
+  }
+
+  class NotePersistenceMapper MAPPER {
+    + toDomain(raw: PrismaNoteRecord): Note
+    + toPersistence(note: Note): PrismaNoteRecord
+  }
+
+  class PrismaNoteRecord DTO {
+    + id: string
+    + creatorId: string
+    + title: string
+    + directoryId: string?
+    + mood: string
+    + content: string
+    + tags: Json
+    + links: Json
+    + createdAt: DateTime
+    + updatedAt: DateTime
+    + deletedAt: DateTime?
+  }
+}
+
+' ============================================
+' NOTE PRESENTATION
+' ============================================
+package "Note_Presentation" <<Presentation>> {
+  
+  class NoteController CONTROLLER {
+    - commandService: NoteCommandService
+    - queryService: NoteQueryService
+    - responseMapper: NoteResponseMapper
+    __
+    + findAll(): Promise<NoteResponseDto[]>
+    + findOne(id: string): Promise<NoteResponseDto>
+    + create(dto: CreateNoteDto, userId: string): Promise<NoteResponseDto>
+    + update(id: string, dto: UpdateNoteDto): Promise<NoteResponseDto>
+    + remove(id: string): Promise<void>
+  }
+
+  class CreateNoteDto DTO {
+    + title: string
+    + directoryId: string?
+    + content: string
+    + mood: Mood?
+  }
+
+  class UpdateNoteDto DTO {
+    + title: string?
+    + directoryId: string?
+    + content: string?
+    + mood: Mood?
+  }
+
+  class NoteResponseDto DTO {
+    + id: string
+    + title: string
+    + directoryId: string?
+    + content: string
+    + mood: Mood
+    + creatorId: string
+    + linkedNoteIds: string[]
+    + tags: string[]
+    + createdAt: Date
+    + updatedAt: Date
+    + deletedAt: Date?
+    + wordCount: number?
+    + preview: string?
+  }
+
+  class NoteResponseMapper MAPPER {
+    + toDto(readModel: NoteReadModel): NoteResponseDto
+    + toDtoList(readModels: NoteReadModel[]): NoteResponseDto[]
+  }
+}
+
+' ============================================
+' NOTE TESTS
+' ============================================
+package "Note_Tests" <<Tests>> {
+  
+  class NoteBuilder BUILDER {
+    - props: NoteProps
+    __
+    + withId(id: string): this
+    + withTitle(title: string): this
+    + withContent(content: string): this
+    + withCreatorId(creatorId: string): this
+    + withDirectoryId(directoryId?: string): this
+    + withMood(mood: Mood): this
+    + deleted(): this
+    + build(): Note
+  }
+}
+
+' ============================================
+' SHARED DOMAIN
+' ============================================
+package "Shared_Domain" <<Shared>> {
+  
+  abstract class DomainError {
+    + {abstract} code: string
+    + {abstract} message: string
+  }
+
+  class NoteNotFoundError {
+    + code: string = "NOTE_NOT_FOUND"
+    + noteId: string
+    __
+    + message(): string
+  }
+
+  class DirectoryNotFoundError {
+    + code: string = "DIRECTORY_NOT_FOUND"
+    + directoryId: string
+    __
+    + message(): string
+  }
+
+  class ArgumentNullError {
+    + code: string = "NULL_OR_UNDEFINED"
+    + argumentName: string
+    __
+    + message(): string
+  }
+
+  class ArgumentEmptyError {
+    + code: string = "EMPTY_STRING"
+    + argumentName: string
+    __
+    + message(): string
+  }
+
+  class ArgumentNegativeError {
+    + code: string = "NEGATIVE_OR_ZERO"
+    + argumentName: string
+    __
+    + message(): string
+  }
+
+  class ArgumentLengthExceedsError {
+    + code: string = "LENGTH_EXCEEDS"
+    + argumentName: string
+    + maxLength: number
+    __
+    + message(): string
+  }
+
+  class NoteId VALUE_OBJECT {
+    + value: string {readonly}
+    __
+    + equals(other: NoteId): boolean
+  }
+
+  class TagId VALUE_OBJECT {
+    + value: string {readonly}
+    __
+    + equals(other: TagId): boolean
+  }
+
+  class CreatorId VALUE_OBJECT {
+    + value: string {readonly}
+    __
+    + equals(other: CreatorId): boolean
+  }
+
+  class DirectoryId VALUE_OBJECT {
+    + value: string {readonly}
+    __
+    + equals(other: DirectoryId): boolean
+  }
+
+  abstract class DomainEvent {
+    + occurredAt: Date {readonly}
+  }
+
+  interface "IDomainEventHandler<T>" as IDomainEventHandler INTERFACE {
+    + handle(event: T): Promise<void>
+  }
+}
+
+' ============================================
+' SHARED APPLICATION
+' ============================================
+package "Shared_Application" <<Shared>> {
+  
+  interface "IQueryHandler<TQuery, TResult>" as IQueryHandler INTERFACE {
+    + execute(query: TQuery): Promise<TResult>
+  }
+
+  interface "ICommandHandler<TCommand, TResult>" as ICommandHandler INTERFACE {
+    + execute(command: TCommand): Promise<TResult>
+  }
+
+  class Guard UTILITY {
+    + {static} againstNullOrUndefined(value, name): Result<void, DomainError>
+    + {static} againstEmptyString(value, name): Result<void, DomainError>
+    + {static} againstNegativeOrZero(value, name): Result<void, DomainError>
+    + {static} againstLengthExceeds(value, max, name): Result<void, DomainError>
+    + {static} combine(results: Result[]): Result<void, DomainError>
+  }
+
+  interface IUnitOfWork INTERFACE {
+    + execute<T>(work: (ctx: IUnitOfWorkContext) => Promise<T>): Promise<T>
+  }
+
+  interface IUnitOfWorkContext INTERFACE {
+    + noteRepo: INoteRepository
+    + directoryRepo: IDirectoryRepository
+    + transactionRepo: ITransactionRepository
+    + accountRepo: IFinancialAccountRepository
+    + projectRepo: IProjectRepository
+  }
+
+  class EventBus SERVICE {
+    - handlers: Map<string, IDomainEventHandler[]>
+    __
+    + register<T>(eventName: string, handler: IDomainEventHandler<T>): void
+    + publish(event: DomainEvent): Promise<void>
+    + publishMany(events: DomainEvent[]): Promise<void>
+  }
+
+  class "Result<T, E>" as Result {
+    - isSuccess: boolean
+    - _value: T?
+    - _error: E?
+    __
+    + {static} ok<T>(value: T): Result<T, never>
+    + {static} fail<E>(error: E): Result<never, E>
+    + isOk(): boolean
+    + isFail(): boolean
+    + value: T
+    + error: E
+    + map<U>(fn: (T) => U): Result<U, E>
+    + flatMap<U>(fn: (T) => Result<U, E>): Result<U, E>
+  }
+}
+
+' ============================================
+' SHARED INFRASTRUCTURE
+' ============================================
+package "Shared_Infrastructure" <<Shared>> {
+  
+  class PrismaService SERVICE {
+    + $transaction<T>(fn): Promise<T>
+  }
+
+  class PrismaUnitOfWork SERVICE {
+    - prisma: PrismaService
+    - noteMapper: NotePersistenceMapper
+    - directoryMapper: DirectoryPersistenceMapper
+    __
+    + execute<T>(work: (ctx) => Promise<T>): Promise<T>
+  }
+
+  class PrismaTx {
+    ' Prisma transaction client type
+  }
+}
+
+' ============================================
+' DIRECTORY DOMAIN (external reference)
+' ============================================
+package "Directory_Domain" <<Domain>> {
+  interface IDirectoryRepository INTERFACE {
+    + findById(id: DirectoryId): Promise<Directory?>
+    + save(directory: Directory): Promise<void>
+    + delete(id: DirectoryId): Promise<void>
+    + findByParentId(parentId?: DirectoryId): Promise<Directory[]>
+    + findAll(): Promise<Directory[]>
+  }
+}
+
+' ============================================
+' RELATIONSHIPS
+' ============================================
+
+' Domain internal
+Note *-- NoteContent : contains
+NoteContent *-- Tag : contains
+Note --> NoteId : has
+Note --> CreatorId : has
+Note --> DirectoryId : references
+Note --> Mood : has
+Tag --> TagId : has
+
+' Domain Events inheritance
+NoteCreatedEvent --|> DomainEvent
+NoteUpdatedEvent --|> DomainEvent
+NoteDeletedEvent --|> DomainEvent
+NoteMovedToDirectoryEvent --|> DomainEvent
+
+' Error inheritance
+NoteNotFoundError --|> DomainError
+DirectoryNotFoundError --|> DomainError
+ArgumentNullError --|> DomainError
+ArgumentEmptyError --|> DomainError
+ArgumentNegativeError --|> DomainError
+ArgumentLengthExceedsError --|> DomainError
+
+' Repository implementation
+INoteRepository <|.. NoteRepository
+
+' Extractor implementations
+ITagExtractor <|.. TagExtractor
+ILinkExtractor <|.. LinkExtractor
+
+' UnitOfWork implementation
+IUnitOfWork <|.. PrismaUnitOfWork
+
+' Handler implementations
+ICommandHandler <|.. CreateNoteHandler
+ICommandHandler <|.. UpdateNoteHandler
+ICommandHandler <|.. DeleteNoteHandler
+IQueryHandler <|.. FindNoteByIdHandler
+IQueryHandler <|.. FindAllNotesHandler
+IDomainEventHandler <|.. OnNoteDeletedHandler
+IDomainEventHandler <|.. OnNoteMovedHandler
+
+' Command Service dependencies
+NoteCommandService --> CreateNoteHandler
+NoteCommandService --> UpdateNoteHandler
+NoteCommandService --> DeleteNoteHandler
+
+' Query Service dependencies
+NoteQueryService --> FindNoteByIdHandler
+NoteQueryService --> FindAllNotesHandler
+
+' Command Handler dependencies
+CreateNoteHandler --> IUnitOfWork
+CreateNoteHandler --> ITagExtractor
+CreateNoteHandler --> ILinkExtractor
+CreateNoteHandler --> EventBus
+
+UpdateNoteHandler --> IUnitOfWork
+UpdateNoteHandler --> ITagExtractor
+UpdateNoteHandler --> ILinkExtractor
+UpdateNoteHandler --> EventBus
+
+DeleteNoteHandler --> IUnitOfWork
+DeleteNoteHandler --> EventBus
+
+' Query Handler dependencies
+FindNoteByIdHandler --> PrismaService
+FindAllNotesHandler --> PrismaService
+
+' Event Handler dependencies
+OnNoteDeletedHandler --> PrismaService
+OnNoteMovedHandler --> PrismaService
+
+' Repository dependencies
+NoteRepository --> PrismaService
+NoteRepository --> NotePersistenceMapper
+NotePersistenceMapper --> PrismaNoteRecord
+
+' UnitOfWork dependencies
+PrismaUnitOfWork --> PrismaService
+IUnitOfWorkContext --> INoteRepository
+IUnitOfWorkContext --> IDirectoryRepository
+
+' Controller dependencies
+NoteController --> NoteCommandService
+NoteController --> NoteQueryService
+NoteController --> NoteResponseMapper
+
+' Mapper dependencies
+NoteResponseMapper --> NoteReadModel
+NoteResponseMapper --> NoteResponseDto
+
+' EventBus dependencies
+EventBus --> IDomainEventHandler
+
+@enduml

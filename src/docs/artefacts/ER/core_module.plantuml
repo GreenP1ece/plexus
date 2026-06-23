@@ -1,0 +1,371 @@
+@startuml "Use Case диаграмма общего модуля (детализация)"
+title Use Case диаграмма общего модуля (расширенная)
+left to right direction
+skinparam actorStyle awesome
+
+' ─── Акторы ───────────────────────────────────────────
+actor "Гость"         as Guest     #line.dashed
+actor "Читатель"      as Reader
+actor "Пользователь"  as User
+actor "Администратор" as Admin
+actor "Владелец"      as Owner
+actor "Редактор"      as Editor
+actor "Комментатор"   as Commenter
+
+' Иерархия наследования
+Guest     <|-- Reader
+Reader    <|-- User
+User      <|-- Admin
+Admin     <|-- Owner
+Reader    <|-- Editor
+Reader    <|-- Commenter
+
+' ─── Управление версиями ─────────────────────────────
+rectangle "Управление версиями" {
+  usecase "Управлять версиями"             as ManageVersions
+  usecase "Просмотреть историю версий"     as ViewVersionHistory
+  usecase "Просмотреть версию"             as ViewVersion
+  usecase "Сравнить версии"                as CompareVersions
+  usecase "Восстановить версию"            as RestoreVersion
+  usecase "Создать версию вручную"         as CreateManualVersion
+  usecase "Добавить комментарий к версии"  as AddVersionComment
+  usecase "Удалить версию"                 as DeleteVersion
+  usecase "Настроить автосохранение"       as ConfigureAutosave
+  usecase "Установить частоту сохранения"  as SetAutosaveInterval
+  usecase "Настроить политику хранения"    as ConfigureRetentionPolicy
+}
+
+' ─── Управление пользователями ───────────────────────
+rectangle "Управление пользователями" {
+  usecase "Управлять пользователями"       as ManageUsers
+  usecase "Просмотреть список пользователей" as ViewUserList
+  usecase "Пригласить пользователя"        as InviteUser
+  usecase "Пригласить по email"            as InviteByEmail
+  usecase "Создать приглашение по ссылке"  as CreateInviteLink
+  usecase "Установить срок действия ссылки" as SetLinkExpiration
+  usecase "Установить лимит использований" as SetLinkUsageLimit
+  usecase "Отозвать приглашение"           as RevokeInvite
+  usecase "Изменить роль пользователя"     as ChangeUserRole
+  usecase "Повысить до редактора"          as PromoteToEditor
+  usecase "Повысить до администратора"     as PromoteToAdmin
+  usecase "Понизить роль"                  as DemoteUser
+  usecase "Заблокировать пользователя"     as BlockUser
+  usecase "Разблокировать пользователя"    as UnblockUser
+  usecase "Удалить пользователя из пространства" as RemoveUserFromSpace
+  usecase "Просмотреть активность пользователя" as ViewUserActivity
+  usecase "Просмотреть права пользователя" as ViewUserPermissions
+}
+
+' ─── Управление правами доступа ───────────────────────
+rectangle "Управление правами доступа" {
+  usecase "Управлять правами доступа"      as ManagePermissions
+  usecase "Настроить права на объект"      as ConfigureObjectPermissions
+  usecase "Установить публичный доступ"    as SetPublicAccess
+  usecase "Настроить уровень публичности"  as ConfigurePublicLevel
+  usecase "Только чтение"                  as PublicReadOnly
+  usecase "Чтение и комментирование"       as PublicReadComment
+  usecase "Полный доступ"                  as PublicFullAccess
+  usecase "Установить доступ по ссылке"    as SetLinkAccess
+  usecase "Настроить параметры ссылки"     as ConfigureLinkParams
+  usecase "Требовать пароль"               as RequirePassword
+  usecase "Установить срок действия"       as SetAccessExpiration
+  usecase "Запретить скачивание"           as DisableDownload
+  usecase "Назначить индивидуальные права" as AssignIndividualPermissions
+  usecase "Выбрать пользователя/группу"    as SelectUserOrGroup
+  usecase "Установить уровень доступа"     as SetAccessLevel
+  usecase "Читатель"                       as ReaderAccess
+  usecase "Комментатор"                    as CommenterAccess
+  usecase "Редактор"                       as EditorAccess
+  usecase "Полный доступ (владелец)"       as OwnerAccess
+  usecase "Унаследовать права родителя"    as InheritParentPermissions
+  usecase "Переопределить наследование"    as OverrideInheritance
+  usecase "Просмотреть эффективные права"  as ViewEffectivePermissions
+  usecase "Настроить права по умолчанию"   as ConfigureDefaultPermissions
+  usecase "Копировать права с другого объекта" as CopyPermissions
+  usecase "Массовое изменение прав"        as BulkChangePermissions
+  usecase "Создать группу пользователей"   as CreateUserGroup
+  usecase "Управлять группами"             as ManageGroups
+  usecase "Добавить пользователей в группу" as AddUsersToGroup
+  usecase "Удалить пользователей из группы" as RemoveUsersFromGroup
+  usecase "Назначить права группе"         as AssignGroupPermissions
+  usecase "Аудит прав доступа"             as AuditPermissions
+  usecase "Просмотреть журнал изменений"   as ViewPermissionLog
+  usecase "Экспортировать отчёт по правам" as ExportPermissionsReport
+}
+
+' ─── Управление иконками ───────────────────────────────
+rectangle "Управление иконками" {
+  usecase "Управлять набором иконок"       as ManageIconPack
+  usecase "Создать набор иконок"           as CreateIconPack
+  usecase "Изменить видимость набора"      as ChangeIconPackVisibility
+  usecase "Приватный набор"                as PrivateIconPack
+  usecase "Общий для пространства"         as SpaceIconPack
+  usecase "Публичный набор"                as PublicIconPack
+  usecase "Установить публичный набор"     as InstallPublicIconPack
+  usecase "Найти набор в каталоге"         as SearchIconPack
+  usecase "Просмотреть превью набора"      as PreviewIconPack
+  usecase "Установить набор по ссылке"     as InstallIconPackFromLink
+  usecase "Удалить набор пространства"     as RemoveIconPack
+  usecase "Добавить иконку в набор"        as AddIconToPack
+  usecase "Добавить иконку загрузкой файла" as AddIconViaUploading
+  usecase "Добавить иконку по URL"         as AddIconViaURL
+  usecase "Удалить иконку из набора"       as RemoveIconFromPack
+  usecase "Редактировать метаданные иконки" as EditIconMetadata
+  usecase "Сменить иконку объекта"         as ChangeIcon
+  usecase "Выбрать из установленного набора" as ChooseIconFromInstalledPack
+  usecase "Добавить в приватный набор и применить" as AddToPrivateIconPackAndApply
+  usecase "Убрать иконку объекта"          as RemoveIconInObject
+  usecase "Экспортировать набор"           as ExportIconPack
+  usecase "Импортировать набор"            as ImportIconPack
+}
+
+' ─── Общие действия ───────────────────────────────────
+rectangle "Общие действия" {
+  usecase "Регистрация нового пользователя"   as SignOn
+  usecase "Вход в систему/авторизация"        as SignIn
+  usecase "Восстановление пароля"             as PasswordRestore
+  usecase "Управление профилем"               as ManageProfile
+  usecase "Управление сессиями"               as ManageSessions
+  usecase "Выход"                             as Leave
+  usecase "Выход на других устройствах"       as LeaveFromOtherDevices
+  usecase "Выход со всех устройств"           as LeaveFromAllDevices
+  usecase "Покинуть пространство"             as LeaveSpace
+  usecase "2FA"                               as 2FA
+  usecase "OATH"                              as OATH                  
+  
+  usecase "Управлять уведомлениями"           as ManageNotifications
+  usecase "Просмотреть уведомления"           as ViewNotifications
+  usecase "Настроить уведомления"             as ConfigureNotifications
+  usecase "Отметить все как прочитанные"      as MarkAllNotificationsAsReaded
+
+  usecase "Управлять корзиной"                as ManageBin
+  usecase "Просмотреть корзину"               as ViewBin
+  usecase "Восстановить объект"               as RestoreObject
+  usecase "Удалить объект перманентно"        as DeleteObjectPermanently
+  usecase "Очистить корзину"                  as CleanBin
+
+  usecase "Глобальный поиск"                  as GlobalSearch
+  usecase "Поиск по названию"                 as TitleSearch
+  usecase "Поиск с фильтрацией"               as FilteredSearch
+  usecase "Полнотекстовый поиск"              as FulltextSearch
+
+  usecase "Экспортировать данные"               as ExportData
+  usecase "Экспортировать пространство"         as ExportSpace
+  usecase "Экспортировать личные данные (GDPR)" as ExportPersonalData
+
+  usecase "Верифицировать email и управлять аккаунтом" as VerifyEmailAndManageAccount
+  usecase "Верифицировать email" as VerifyEmail
+  usecase "Удалить аккаунт"      as DeleteAccount
+
+  usecase "CRUD комментариев"                 as CRUDComment
+  usecase "Просмотреть комментарии к объекту" as ViewComments
+  usecase "Раскрыть комментарий"              as ViewMoreComment
+  usecase "Искать комментарий"                as SearchComment
+  usecase "Создать комментарий к объекту"     as CreateComment
+  usecase "Редактировать комментарий"         as EditComment
+  usecase "Удалить комментарий"               as DeleteComment
+  usecase "Создать якорный комментарий"       as CreateAnchorComment
+  usecase "Восстановить черновик комментария" as RestoreCommentDraft
+  usecase "Управлять комментариями объекта"   as ManageComments
+}
+
+' ─── Только Владелец ──────────────────────────────────
+rectangle "Только Владелец" {
+  usecase "Управлять пространством"    as ManageWorkspace
+  usecase "Управлять администраторами" as ManageAdmins
+  usecase "Назначить администратора"   as AssignAdmin
+  usecase "Снять администратора"       as RemoveAdmin
+  usecase "Передать владение"          as TransferOwnership
+}
+
+' ─── Связи для Управления версиями ───────────────────
+Admin --> ManageVersions
+
+ManageVersions ..> ViewVersionHistory       : <<include>>
+ManageVersions ..> RestoreVersion           : <<include>>
+ManageVersions ..> ConfigureAutosave        : <<extend>>
+
+ViewVersionHistory ..> ViewVersion          : <<include>>
+ViewVersionHistory ..> CompareVersions      : <<extend>>
+ViewVersion ..> AddVersionComment           : <<extend>>
+
+RestoreVersion ..> CreateManualVersion      : <<extend>>
+
+ConfigureAutosave ..> SetAutosaveInterval   : <<include>>
+ConfigureAutosave ..> ConfigureRetentionPolicy : <<extend>>
+
+Admin --> DeleteVersion
+
+' ─── Связи для Управления пользователями ─────────────
+Admin --> ManageUsers
+
+ManageUsers ..> ViewUserList                : <<include>>
+ManageUsers ..> InviteUser                  : <<include>>
+ManageUsers ..> ChangeUserRole              : <<include>>
+ManageUsers ..> RemoveUserFromSpace         : <<include>>
+
+InviteUser ..> InviteByEmail                : <<extend>>
+InviteUser ..> CreateInviteLink             : <<extend>>
+
+CreateInviteLink ..> SetLinkExpiration      : <<extend>>
+CreateInviteLink ..> SetLinkUsageLimit      : <<extend>>
+
+InviteUser ..> RevokeInvite                 : <<extend>>
+
+ChangeUserRole ..> PromoteToEditor          : <<extend>>
+ChangeUserRole ..> PromoteToAdmin           : <<extend>>
+ChangeUserRole ..> DemoteUser               : <<extend>>
+
+ManageUsers ..> BlockUser                   : <<extend>>
+ManageUsers ..> UnblockUser                 : <<extend>>
+
+ViewUserList ..> ViewUserActivity           : <<extend>>
+ViewUserList ..> ViewUserPermissions        : <<extend>>
+
+' ─── Связи для Управления правами доступа ────────────
+Admin --> ManagePermissions
+
+ManagePermissions ..> ConfigureObjectPermissions : <<include>>
+ManagePermissions ..> ManageGroups               : <<include>>
+ManagePermissions ..> ConfigureDefaultPermissions : <<extend>>
+ManagePermissions ..> AuditPermissions           : <<extend>>
+
+ConfigureObjectPermissions ..> SetPublicAccess   : <<extend>>
+ConfigureObjectPermissions ..> SetLinkAccess     : <<extend>>
+ConfigureObjectPermissions ..> AssignIndividualPermissions : <<include>>
+ConfigureObjectPermissions ..> InheritParentPermissions : <<extend>>
+ConfigureObjectPermissions ..> CopyPermissions   : <<extend>>
+
+SetPublicAccess ..> ConfigurePublicLevel         : <<include>>
+
+ConfigurePublicLevel ..> PublicReadOnly          : <<extend>>
+ConfigurePublicLevel ..> PublicReadComment       : <<extend>>
+ConfigurePublicLevel ..> PublicFullAccess        : <<extend>>
+
+SetLinkAccess ..> ConfigureLinkParams            : <<include>>
+
+ConfigureLinkParams ..> RequirePassword          : <<extend>>
+ConfigureLinkParams ..> SetAccessExpiration      : <<extend>>
+ConfigureLinkParams ..> DisableDownload          : <<extend>>
+
+AssignIndividualPermissions ..> SelectUserOrGroup : <<include>>
+AssignIndividualPermissions ..> SetAccessLevel    : <<include>>
+
+SetAccessLevel ..> ReaderAccess                  : <<extend>>
+SetAccessLevel ..> CommenterAccess               : <<extend>>
+SetAccessLevel ..> EditorAccess                  : <<extend>>
+SetAccessLevel ..> OwnerAccess                   : <<extend>>
+
+InheritParentPermissions ..> OverrideInheritance : <<extend>>
+
+ConfigureObjectPermissions ..> ViewEffectivePermissions : <<extend>>
+
+ManagePermissions ..> BulkChangePermissions      : <<extend>>
+
+ManageGroups ..> CreateUserGroup                 : <<include>>
+ManageGroups ..> AddUsersToGroup                 : <<include>>
+ManageGroups ..> RemoveUsersFromGroup            : <<include>>
+ManageGroups ..> AssignGroupPermissions          : <<include>>
+
+AuditPermissions ..> ViewPermissionLog           : <<include>>
+AuditPermissions ..> ExportPermissionsReport     : <<extend>>
+
+' ─── Связи для Управления иконками ───────────────────
+Admin --> ManageIconPack
+Admin --> AddIconToPack
+Admin --> ChangeIcon
+
+ManageIconPack ..> CreateIconPack               : <<include>>
+ManageIconPack ..> ChangeIconPackVisibility     : <<extend>>
+ManageIconPack ..> InstallPublicIconPack        : <<include>>
+ManageIconPack ..> InstallIconPackFromLink      : <<extend>>
+ManageIconPack ..> RemoveIconPack               : <<include>>
+ManageIconPack ..> ExportIconPack               : <<extend>>
+ManageIconPack ..> ImportIconPack               : <<extend>>
+
+ChangeIconPackVisibility ..> PrivateIconPack    : <<extend>>
+ChangeIconPackVisibility ..> SpaceIconPack      : <<extend>>
+ChangeIconPackVisibility ..> PublicIconPack     : <<extend>>
+
+InstallPublicIconPack ..> SearchIconPack        : <<include>>
+InstallPublicIconPack ..> PreviewIconPack       : <<extend>>
+
+AddIconToPack ..> AddIconViaUploading           : <<include>>
+AddIconToPack ..> AddIconViaURL                 : <<include>>
+AddIconToPack ..> EditIconMetadata              : <<extend>>
+
+ManageIconPack ..> RemoveIconFromPack           : <<extend>>
+
+ChangeIcon ..> ChooseIconFromInstalledPack      : <<include>>
+ChangeIcon ..> AddToPrivateIconPackAndApply     : <<extend>>
+ChangeIcon ..> RemoveIconInObject               : <<include>>
+
+' ─── Связи для Общих действий (Гость — неавторизованные действия) ────
+Guest --> SignOn
+Guest --> SignIn
+Guest --> PasswordRestore
+
+SignIn ..> 2FA                                  : <<include>>
+SignIn ..> OATH                                 : <<include>>
+
+PasswordRestore ..> VerifyEmail                 : <<include>>
+
+' ─── Связи для Общих действий (Reader и выше — авторизованные действия) ────
+Reader --> ManageProfile
+Reader --> ManageSessions
+Reader --> LeaveSpace
+Reader --> ManageNotifications
+Reader --> ManageBin
+Reader --> GlobalSearch
+Reader --> ExportData
+Reader --> VerifyEmailAndManageAccount
+Reader --> DeleteAccount
+Reader --> CRUDComment
+
+ManageSessions ..> Leave                        : <<include>>
+ManageSessions ..> LeaveFromOtherDevices        : <<include>>
+ManageSessions ..> LeaveFromAllDevices          : <<include>>
+
+Leave ..> LeaveFromAllDevices                   : <<extend>>
+
+ManageNotifications ..> ViewNotifications       : <<include>>
+ManageNotifications ..> ConfigureNotifications  : <<extend>>
+ManageNotifications ..> MarkAllNotificationsAsReaded : <<include>>
+
+ManageBin ..> ViewBin                           : <<include>>
+ManageBin ..> RestoreObject                     : <<include>>
+ManageBin ..> DeleteObjectPermanently           : <<include>>
+ManageBin ..> CleanBin                          : <<include>>
+
+GlobalSearch ..> TitleSearch                    : <<include>>
+GlobalSearch ..> FilteredSearch                 : <<extend>>
+GlobalSearch ..> FulltextSearch                 : <<extend>>
+
+ExportData ..> ExportSpace                      : <<include>>
+ExportData ..> ExportPersonalData               : <<include>>
+
+VerifyEmailAndManageAccount ..> VerifyEmail     : <<include>>
+DeleteAccount ..> VerifyEmail                   : <<extend>>
+
+CRUDComment ..> CreateComment                   : <<include>>
+CRUDComment ..> ViewComments                    : <<include>>
+CRUDComment ..> ManageComments                  : <<include>>
+CRUDComment ..> SearchComment                   : <<include>>
+
+ViewComments ..> ViewMoreComment                : <<include>>
+
+ManageComments ..> EditComment                  : <<include>>
+ManageComments ..> DeleteComment                : <<include>>
+
+CreateComment ..> CreateAnchorComment           : <<extend>>
+CreateComment ..> RestoreCommentDraft           : <<extend>>
+
+' ─── Связи для Владельца ─────────────────────────────
+Owner --> ManageWorkspace
+Owner --> ManageAdmins
+
+ManageAdmins ..> AssignAdmin                    : <<include>>
+ManageAdmins ..> RemoveAdmin                    : <<include>>
+Owner --> TransferOwnership
+
+@enduml

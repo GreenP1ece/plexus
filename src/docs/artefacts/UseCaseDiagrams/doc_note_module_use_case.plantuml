@@ -1,0 +1,98 @@
+@startuml "Use Case диаграмма модуля заметок"
+title Use Case диаграмма модуля заметок
+left to right direction
+skinparam actorStyle awesome
+
+' ─── Акторы ───────────────────────────────────────────
+actor "Читатель"      as Reader    #line.dashed
+actor "Пользователь"  as User
+actor "Редактор"      as Editor
+actor "Комментатор"   as Commenter
+actor "Администратор" as Admin
+actor "Владелец"      as Owner
+
+' Иерархия наследования
+Reader    <|-- User
+Reader    <|-- Editor
+Reader    <|-- Commenter
+User      <|-- Admin
+Admin     <|-- Owner
+
+' ─── Работа с заметками ───────────────────────────────
+rectangle "Работа с заметками" {
+  usecase "CRUD заметки"                as CRUDNote
+    note right of CRUDNote
+      Также доступно:
+      • Комментирование (см. Общий модуль)
+      • Управление иконками (см. Общий модуль)
+      • Корзина (см. Общий модуль)
+      • Глобальный поиск (см. Общий модуль)
+    end note
+  usecase "Создать заметку"             as CreateNote
+  usecase "Создать заметку из шаблона"  as CreateNoteFromTemplate
+  usecase "Дублировать заметку"         as DuplicateNote
+  usecase "Редактировать заметку"       as EditNote
+  usecase "Просмотреть заметку"         as ViewNote
+  usecase "Создать тег в записи"        as CreateTag
+  usecase "Создать ссылку"              as CreateLink
+  usecase "Ссылка на заметку"           as CreateNoteLink
+  usecase "Ссылка на локальный файл"    as CreateLocalFileLink
+  usecase "URL-ссылка"                  as CreateURLLink
+  usecase "Изменить вид ссылки"         as EditLinkView
+  usecase "Импорт записей"              as ImportNotes
+  usecase "Превратить заметку в шаблон" as CreateTemplateNote
+}
+
+' ─── Управление контентом ─────────────────────────────
+rectangle "Управление контентом" {
+  usecase "Управлять заметками"            as ManageNotes
+  usecase "Ограничение доступа к заметкам" as ManageNoteAccess
+  usecase "Управлять тегами"               as ManageTags
+  usecase "Управлять шаблонами"            as ManageTemplates
+}
+
+' ─── Только Владелец ──────────────────────────────────
+rectangle "Только Владелец" {
+  usecase "Управлять пространством"    as ManageWorkspace
+  usecase "Управлять администраторами" as ManageAdmins
+}
+
+' ─── Расширения и включения ───────────────────────────
+CRUDNote   ..> CreateNote : <<include>>
+CRUDNote   ..> EditNote   : <<include>>
+CRUDNote   ..> ViewNote   : <<include>>
+
+CreateNote ..> DuplicateNote          : <<extend>>
+CreateNote ..> CreateNoteFromTemplate : <<extend>>
+
+EditNote ..> CreateTag             : <<extend>>
+EditNote ..> CreateLink            : <<extend>>
+EditNote ..> CreateTemplateNote    : <<extend>>
+CreateLink ..> CreateNoteLink      : <<extend>>
+CreateLink ..> CreateLocalFileLink : <<extend>>
+CreateLink ..> CreateURLLink       : <<extend>>
+CreateLink ..> EditLinkView        : <<extend>>
+
+ManageNotes ..> ManageNoteAccess : <<extend>>
+
+
+' ─── Связи акторов с прецедентами ────────────────────
+' Общие для всех (через Читатель)
+Reader --> ViewNote
+
+' Дополнительные права
+User      --> CRUDNote
+User      --> ImportNotes
+
+Editor    --> EditNote
+
+' Администратор
+Admin --> ManageNotes
+Admin --> ManageTags
+Admin --> ManageTemplates
+
+' Владелец
+Owner --> ManageWorkspace
+Owner --> ManageAdmins
+
+@enduml
