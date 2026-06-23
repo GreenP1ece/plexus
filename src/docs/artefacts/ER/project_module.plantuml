@@ -76,6 +76,7 @@ entity DECISION {
     creator_id              : varchar <<FK>>
     source_note_id          : varchar <<FK, nullable>>
     parent_id               : varchar <<FK, nullable>>
+    rejected_by_decision_id : varchar <<FK, nullable>>
     title                   : varchar
     content                 : text
     status                  : DecisionStatus
