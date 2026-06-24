@@ -1,0 +1,6 @@
+@api_HostAddress = https://localhost:7072
+
+GET {{api_HostAddress}}
+Accept: application/json
+
+###
