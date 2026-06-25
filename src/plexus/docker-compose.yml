@@ -47,7 +47,9 @@ services:
       KC_DB_PASSWORD: rootpassword
     ports:
       - "8080:8080"
-    command: start-dev
+    command: start-dev --import-realm
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
     depends_on:
       postgres:
         condition: service_healthy

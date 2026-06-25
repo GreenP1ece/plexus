@@ -81,6 +81,11 @@
               "target": "Package",
               "version": "[2.7.10, )",
               "versionCentrallyManaged": true
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[10.2.3, )",
+              "versionCentrallyManaged": true
             }
           },
           "centralPackageVersions": {
@@ -90,6 +95,7 @@
             "Microsoft.EntityFrameworkCore.Design": "8.0.0",
             "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.0",
             "StackExchange.Redis": "2.7.10",
+            "Swashbuckle.AspNetCore": "10.2.3",
             "Testcontainers.Keycloak": "3.10.0",
             "Testcontainers.PostgreSql": "3.10.0"
           },
