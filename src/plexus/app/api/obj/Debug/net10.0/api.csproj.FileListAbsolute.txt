@@ -117,3 +117,6 @@ C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\obj\Debug\net10.0\refint\api.dl
 C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\obj\Debug\net10.0\api.pdb
 C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\obj\Debug\net10.0\api.genruntimeconfig.cache
 C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\obj\Debug\net10.0\ref\api.dll
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\bin\Debug\net10.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll
