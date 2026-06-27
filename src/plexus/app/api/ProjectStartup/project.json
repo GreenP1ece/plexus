@@ -1,0 +1,37 @@
+{
+  "name": "ApiProjectStartup",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "app/api/ProjectStartup",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet build app/api/ProjectStartup/ProjectStartup.csproj --configuration Release",
+        "cwd": "{workspaceRoot}"
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet run --project app/api/ProjectStartup/ProjectStartup.csproj --launch-profile https",
+        "cwd": "{workspaceRoot}"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet test app/api/ProjectStartup/ProjectStartup.csproj",
+        "cwd": "{workspaceRoot}"
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet publish app/api/ProjectStartup/ProjectStartup.csproj -c Release -o dist/app/api",
+        "cwd": "{workspaceRoot}"
+      }
+    }
+  },
+  "tags": ["scope:api", "type:app"]
+}
