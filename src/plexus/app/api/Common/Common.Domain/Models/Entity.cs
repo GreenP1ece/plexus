@@ -6,7 +6,7 @@ public abstract class Entity : IEntity
 
     protected Entity() => _events = [];
 
-    public Guid Id { get; private set; } = default;
+    public Guid Id { get; private set; } = Guid.CreateVersion7();
 
     public IReadOnlyCollection<IDomainEvent> Events
         => _events.ToList().AsReadOnly();

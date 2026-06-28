@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj": {}
+    "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj": {}
   },
   "projects": {
     "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Domain\\Common.Domain.csproj": {
@@ -378,14 +378,14 @@
         }
       }
     },
-    "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj": {
+    "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj",
+        "projectUniqueName": "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj",
         "projectName": "Identity.Domain",
-        "projectPath": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj",
+        "projectPath": "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj",
         "packagesPath": "C:\\Users\\kirya\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\obj\\",
+        "outputPath": "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "centralPackageVersionsManagementEnabled": true,
         "fallbackFolders": [
