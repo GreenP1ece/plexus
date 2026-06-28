@@ -1,9 +1,3 @@
-C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.csproj.AssemblyReference.cache
-C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.AssemblyInfoInputs.cache
-C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.AssemblyInfo.cs
-C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.csproj.CoreCompileInputs.cache
-C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.sourcelink.json
 C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\bin\Debug\net10.0\Common.Web.deps.json
 C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\bin\Debug\net10.0\Common.Web.dll
 C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\bin\Debug\net10.0\Common.Web.pdb
@@ -13,6 +7,12 @@ C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\bin\Debug\net
 C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\bin\Debug\net10.0\Common.Infrastructure.pdb
 C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\bin\Debug\net10.0\Common.Application.pdb
 C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\bin\Debug\net10.0\Common.Domain.pdb
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.csproj.AssemblyReference.cache
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.AssemblyInfoInputs.cache
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.AssemblyInfo.cs
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.csproj.CoreCompileInputs.cache
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.sourcelink.json
 C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.csproj.Up2Date
 C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\Common.Web.dll
 C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Web\obj\Debug\net10.0\refint\Common.Web.dll

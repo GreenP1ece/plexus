@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Rh7X1cPduAM=",
+  "dgSpecHash": "5WcrFIpF2Gg=",
   "success": true,
   "projectFilePath": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Web\\Common.Web.csproj",
   "expectedPackageFiles": [
@@ -17,6 +17,7 @@
     "C:\\Users\\kirya\\.nuget\\packages\\mediator.sourcegenerator\\3.1.0-rc.1\\mediator.sourcegenerator.3.1.0-rc.1.nupkg.sha512",
     "C:\\Users\\kirya\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\10.0.9\\microsoft.aspnetcore.authentication.jwtbearer.10.0.9.nupkg.sha512",
     "C:\\Users\\kirya\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\10.0.9\\microsoft.aspnetcore.identity.entityframeworkcore.10.0.9.nupkg.sha512",
+    "C:\\Users\\kirya\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.2\\microsoft.aspnetcore.openapi.10.0.2.nupkg.sha512",
     "C:\\Users\\kirya\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\8.0.0\\microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
     "C:\\Users\\kirya\\.nuget\\packages\\microsoft.bcl.cryptography\\9.0.4\\microsoft.bcl.cryptography.9.0.4.nupkg.sha512",
     "C:\\Users\\kirya\\.nuget\\packages\\microsoft.build.framework\\18.0.2\\microsoft.build.framework.18.0.2.nupkg.sha512",

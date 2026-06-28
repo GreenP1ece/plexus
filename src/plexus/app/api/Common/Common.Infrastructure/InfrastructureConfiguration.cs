@@ -1,13 +1,7 @@
 ﻿using System.Reflection;
-using System.Security.Claims;
-using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using Common.Infrastructure.Configuration;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Common.Infrastructure.Events;
 using Common.Domain;
 using Common.Application.Contracts;
@@ -32,50 +26,6 @@ public static class InfrastructureConfiguration
         => services
             .AddDatabase<TDbContext>(configuration, connectionStringName, provider)
             .AddRepositories(assembly);
-
-    public static IServiceCollection AddTokenAuthentication(
-        this IServiceCollection services,
-        IConfiguration configuration,
-        IHostEnvironment environment)
-    {
-        var keycloak = KeycloakSettings.FromConfiguration(configuration);
-
-        services
-            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.MetadataAddress      = keycloak.MetadataAddress;
-                options.Authority            = keycloak.Authority;
-                options.Audience             = keycloak.Audience;
-                options.RequireHttpsMetadata = !environment.IsDevelopment();
-
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer              = keycloak.Issuer,
-                    ValidAudience            = keycloak.Audience,
-                    ValidateIssuer           = true,
-                    ValidateAudience         = true,
-                    ValidateLifetime         = true,
-                    ValidateIssuerSigningKey = true,
-                };
-
-                options.Events = new JwtBearerEvents
-                {
-                    OnTokenValidated = AddKeycloakRealmRoles
-                };
-            });
-
-        services.AddHttpContextAccessor();
-
-        return services;
-    }
-
-    public static IServiceCollection AddApiAuthorization(
-        this IServiceCollection services)
-    {
-        services.AddAuthorization();
-        return services;
-    }
 
     public static IServiceCollection AddEventSourcing(this IServiceCollection services)
         => services.AddTransient<IEventDispatcher, EventDispatcher>();
@@ -139,40 +89,4 @@ public static class InfrastructureConfiguration
                 .AssignableTo(typeof(IQueryRepository<>)))
             .AsImplementedInterfaces()
             .WithTransientLifetime());
-
-    private static Task AddKeycloakRealmRoles(TokenValidatedContext context)
-    {
-        if (context.Principal?.Identity is not ClaimsIdentity claimsIdentity)
-            return Task.CompletedTask;
-
-        var realmAccess = context.Principal.FindFirst("realm_access")?.Value;
-
-        if (string.IsNullOrWhiteSpace(realmAccess))
-            return Task.CompletedTask;
-
-        try
-        {
-            using var doc = JsonDocument.Parse(realmAccess);
-
-            if (!doc.RootElement.TryGetProperty("roles", out var roles) ||
-                roles.ValueKind is not JsonValueKind.Array)
-                return Task.CompletedTask;
-
-            foreach (var role in roles.EnumerateArray())
-            {
-                var roleName = role.GetString();
-
-                if (string.IsNullOrWhiteSpace(roleName)) continue;
-
-                var exists = claimsIdentity.Claims
-                    .Any(c => c.Type == ClaimTypes.Role && c.Value == roleName);
-
-                if (!exists)
-                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, roleName));
-            }
-        }
-        catch (JsonException) { /* невалидный JSON — пропускаем */ }
-
-        return Task.CompletedTask;
-    }
 }

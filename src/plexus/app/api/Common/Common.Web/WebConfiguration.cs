@@ -4,7 +4,6 @@ using Common.Web.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-
 namespace Common.Web;
 
 public static class WebConfiguration
