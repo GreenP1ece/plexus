@@ -1,4 +1,6 @@
-﻿namespace Common.Application.Contracts;
+﻿using Common.Application.Images;
+
+namespace Common.Application.Contracts;
 
 public interface IImageService
 {

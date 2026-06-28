@@ -1,0 +1,16 @@
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\obj\Debug\net10.0\Common.Application.csproj.AssemblyReference.cache
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\obj\Debug\net10.0\Common.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\obj\Debug\net10.0\Common.Application.AssemblyInfoInputs.cache
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\obj\Debug\net10.0\Common.Application.AssemblyInfo.cs
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\obj\Debug\net10.0\Common.Application.csproj.CoreCompileInputs.cache
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\obj\Debug\net10.0\Common.Application.sourcelink.json
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\bin\Debug\net10.0\Common.Application.deps.json
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\bin\Debug\net10.0\Common.Application.dll
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\bin\Debug\net10.0\Common.Application.pdb
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\bin\Debug\net10.0\Common.Domain.dll
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\bin\Debug\net10.0\Common.Domain.pdb
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\obj\Debug\net10.0\Common.A.58782CAF.Up2Date
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\obj\Debug\net10.0\Common.Application.dll
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\obj\Debug\net10.0\refint\Common.Application.dll
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\obj\Debug\net10.0\Common.Application.pdb
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Common\Common.Application\obj\Debug\net10.0\ref\Common.Application.dll

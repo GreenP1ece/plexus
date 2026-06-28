@@ -1,4 +1,3 @@
-using Api.Extensions;
 namespace Api.Configuration;
 
 internal sealed class KeycloakSettings

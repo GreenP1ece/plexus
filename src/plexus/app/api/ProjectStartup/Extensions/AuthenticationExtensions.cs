@@ -1,8 +1,5 @@
 using System.Security.Claims;
 using System.Text.Json;
-using Api.Configuration;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Extensions;
 
