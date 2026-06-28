@@ -2,14 +2,11 @@ using FluentValidation;
 using Mediator;
 
 namespace Common.Application.Behaviours;
-public class RequestValidationBehavior<TMessage, TResponse>
+public class RequestValidationBehavior<TMessage, TResponse>(IEnumerable<IValidator<TMessage>> validators)
     : IPipelineBehavior<TMessage, TResponse>
     where TMessage : IMessage
 {
-    private readonly IEnumerable<IValidator<TMessage>> validators;
-
-    public RequestValidationBehavior(IEnumerable<IValidator<TMessage>> validators)
-        => this.validators = validators;
+    private readonly IEnumerable<IValidator<TMessage>> _validators = validators;
 
     public async ValueTask<TResponse> Handle(
         TMessage  message,
@@ -19,7 +16,7 @@ public class RequestValidationBehavior<TMessage, TResponse>
         var context = new ValidationContext<TMessage>(message);
 
         var results = await Task.WhenAll(
-            validators.Select(v => v.ValidateAsync(context, ct)));
+            _validators.Select(v => v.ValidateAsync(context, ct)));
 
         var errors = results
             .SelectMany(result => result.Errors)

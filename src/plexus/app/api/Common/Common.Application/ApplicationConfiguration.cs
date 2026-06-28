@@ -5,7 +5,6 @@ using Common.Application.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Common.Application.Extensions;
-
 namespace Common.Application;
 public static class ApplicationConfiguration
 {
