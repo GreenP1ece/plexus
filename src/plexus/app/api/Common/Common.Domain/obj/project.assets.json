@@ -151,11 +151,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Domain\\Common.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Domain\\Common.Domain.csproj",
       "projectName": "Common.Domain",
-      "projectPath": "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Domain\\Common.Domain.csproj",
+      "projectPath": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Domain\\Common.Domain.csproj",
       "packagesPath": "C:\\Users\\kirya\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Domain\\obj\\",
+      "outputPath": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "centralPackageVersionsManagementEnabled": true,
       "fallbackFolders": [
@@ -204,7 +204,10 @@
         },
         "centralPackageVersions": {
           "AWSSDK.S3": "3.7.300",
+          "FluentResults": "4.0.0",
+          "FluentResults.Extensions.AspNetCore": "0.2.0",
           "FluentValidation": "12.1.1",
+          "FluentValidation.DependencyInjectionExtensions": "12.1.1",
           "Mapster": "10.0.9",
           "Mediator.Abstractions": "3.1.0-rc.1",
           "Mediator.SourceGenerator": "3.1.0-rc.1",
