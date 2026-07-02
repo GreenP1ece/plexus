@@ -4687,6 +4687,7 @@
           "Npgsql": "10.0.3",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.2",
           "Riok.Mapperly": "5.0.0-next.8",
+          "Schick.Keycloak.RestApiClient": "26.5.7",
           "Scrutor": "7.0.0",
           "StackExchange.Redis": "2.7.10",
           "Swashbuckle.AspNetCore": "10.2.3",

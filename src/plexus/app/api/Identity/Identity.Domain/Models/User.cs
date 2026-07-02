@@ -1,7 +1,7 @@
 using Common.Domain;
 using Common.Domain.Models;
 
-namespace Identity.Domain.Users;
+namespace Identity.Domain.Models;
 
 public class User : Entity, IAggregateRoot
 {

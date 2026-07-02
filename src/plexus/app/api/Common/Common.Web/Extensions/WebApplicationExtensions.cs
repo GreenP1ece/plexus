@@ -1,6 +1,10 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-namespace Api.Extensions;
+namespace Common.Web.Extensions;
 
 internal static class WebApplicationExtensions
 {

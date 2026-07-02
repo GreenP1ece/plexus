@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using Common.Domain.Models;
 
-namespace Identity.Domain.Users;
+namespace Identity.Domain.Models;
 public partial class Email : ValueObject
 {
     private static readonly Regex _emailRegex = EmailRegex();

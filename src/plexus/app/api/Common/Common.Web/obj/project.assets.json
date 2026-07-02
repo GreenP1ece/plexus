@@ -4182,11 +4182,14 @@
   },
   "projectFileDependencyGroups": {
     "net10.0": [
+      "Common.Application >= 1.0.0",
       "Common.Infrastructure >= 1.0.0",
       "FluentResults >= 4.0.0",
       "FluentResults.Extensions.AspNetCore >= 0.2.0",
       "FluentValidation >= 12.1.1",
       "FluentValidation.DependencyInjectionExtensions >= 12.1.1",
+      "Mediator.Abstractions >= 3.1.0-rc.1",
+      "Mediator.SourceGenerator >= 3.1.0-rc.1",
       "Microsoft.AspNetCore.OpenApi >= 10.0.2",
       "Swashbuckle.AspNetCore >= 10.2.3"
     ]
@@ -4225,6 +4228,9 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
+            "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Application\\Common.Application.csproj": {
+              "projectPath": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Application\\Common.Application.csproj"
+            },
             "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Infrastructure\\Common.Infrastructure.csproj": {
               "projectPath": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Infrastructure\\Common.Infrastructure.csproj"
             }
@@ -4267,6 +4273,16 @@
             "version": "[12.1.1, )",
             "versionCentrallyManaged": true
           },
+          "Mediator.Abstractions": {
+            "target": "Package",
+            "version": "[3.1.0-rc.1, )",
+            "versionCentrallyManaged": true
+          },
+          "Mediator.SourceGenerator": {
+            "target": "Package",
+            "version": "[3.1.0-rc.1, )",
+            "versionCentrallyManaged": true
+          },
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
             "version": "[10.0.2, )",
@@ -4298,6 +4314,7 @@
           "Npgsql": "10.0.3",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.2",
           "Riok.Mapperly": "5.0.0-next.8",
+          "Schick.Keycloak.RestApiClient": "26.5.7",
           "Scrutor": "7.0.0",
           "StackExchange.Redis": "2.7.10",
           "Swashbuckle.AspNetCore": "10.2.3",

@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using Common.Domain;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Identity.Domain;
 

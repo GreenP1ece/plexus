@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj": {}
+    "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj": {}
   },
   "projects": {
     "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Common\\Common.Domain\\Common.Domain.csproj": {
@@ -78,6 +78,7 @@
             "Npgsql": "10.0.3",
             "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.2",
             "Riok.Mapperly": "5.0.0-next.8",
+            "Schick.Keycloak.RestApiClient": "26.5.7",
             "Scrutor": "7.0.0",
             "StackExchange.Redis": "2.7.10",
             "Swashbuckle.AspNetCore": "10.2.3",
@@ -378,14 +379,14 @@
         }
       }
     },
-    "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj": {
+    "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj",
         "projectName": "Identity.Domain",
-        "projectPath": "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj",
+        "projectPath": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj",
         "packagesPath": "C:\\Users\\kirya\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\obj\\",
+        "outputPath": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "centralPackageVersionsManagementEnabled": true,
         "fallbackFolders": [
@@ -449,6 +450,7 @@
             "Npgsql": "10.0.3",
             "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.2",
             "Riok.Mapperly": "5.0.0-next.8",
+            "Schick.Keycloak.RestApiClient": "26.5.7",
             "Scrutor": "7.0.0",
             "StackExchange.Redis": "2.7.10",
             "Swashbuckle.AspNetCore": "10.2.3",

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Api.Extensions;
+namespace Common.Web.Extensions;
 
 internal static class AuthenticationExtensions
 {

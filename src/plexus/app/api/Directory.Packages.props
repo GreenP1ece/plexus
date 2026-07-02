@@ -31,5 +31,6 @@
     <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageVersion Include="FluentResults.Extensions.AspNetCore" Version="0.2.0" />
     <PackageVersion Include="FluentResults" Version="4.0.0" />
+    <PackageVersion Include="Schick.Keycloak.RestApiClient" Version="26.5.7" />
     </ItemGroup>
 </Project>

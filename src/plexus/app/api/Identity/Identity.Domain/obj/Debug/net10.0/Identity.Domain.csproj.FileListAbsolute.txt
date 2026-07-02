@@ -1,0 +1,16 @@
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\bin\Debug\net10.0\Identity.Domain.deps.json
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\bin\Debug\net10.0\Identity.Domain.dll
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\bin\Debug\net10.0\Identity.Domain.pdb
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\bin\Debug\net10.0\Common.Domain.dll
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\bin\Debug\net10.0\Common.Domain.pdb
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\obj\Debug\net10.0\Identity.Domain.csproj.AssemblyReference.cache
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\obj\Debug\net10.0\Identity.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\obj\Debug\net10.0\Identity.Domain.AssemblyInfoInputs.cache
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\obj\Debug\net10.0\Identity.Domain.AssemblyInfo.cs
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\obj\Debug\net10.0\Identity.Domain.csproj.CoreCompileInputs.cache
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\obj\Debug\net10.0\Identity.Domain.sourcelink.json
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\obj\Debug\net10.0\Identity.AFA9DB19.Up2Date
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\obj\Debug\net10.0\Identity.Domain.dll
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\obj\Debug\net10.0\refint\Identity.Domain.dll
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\obj\Debug\net10.0\Identity.Domain.pdb
+C:\Users\kirya\Desktop\Plexus\src\plexus\app\api\Identity\Identity.Domain\obj\Debug\net10.0\ref\Identity.Domain.dll

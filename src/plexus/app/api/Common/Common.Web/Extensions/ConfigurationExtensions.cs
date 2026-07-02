@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.Extensions.Configuration;
 
-namespace Common.Infrastructure.Extensions;
+namespace Common.Web.Extensions;
 internal static class ConfigurationExtensions
 {
     public static string GetRequiredValue(

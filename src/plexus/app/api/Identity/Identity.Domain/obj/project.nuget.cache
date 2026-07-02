@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VOecm1qEi5E=",
+  "dgSpecHash": "7H56TQTdfkQ=",
   "success": true,
-  "projectFilePath": "c:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj",
+  "projectFilePath": "C:\\Users\\kirya\\Desktop\\Plexus\\src\\plexus\\app\\api\\Identity\\Identity.Domain\\Identity.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kirya\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.0\\microsoft.extensions.dependencyinjection.abstractions.10.0.0.nupkg.sha512",
     "C:\\Users\\kirya\\.nuget\\packages\\microsoft.extensions.dependencymodel\\10.0.0\\microsoft.extensions.dependencymodel.10.0.0.nupkg.sha512",
